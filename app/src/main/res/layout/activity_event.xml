@@ -76,28 +76,51 @@
                 android:padding="@dimen/small_margin"
                 android:src="@drawable/ic_place_vector" />
 
-            <org.fossify.commons.views.MyEditText
-                android:id="@+id/event_description"
+            <LinearLayout
+                android:id="@+id/event_description_holder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/event_location"
                 android:layout_marginStart="@dimen/activity_margin"
                 android:layout_marginTop="@dimen/activity_margin"
                 android:layout_marginEnd="@dimen/activity_margin"
-                android:autoLink="all"
-                android:gravity="top"
-                android:hint="@string/description"
-                android:inputType="textCapSentences|textMultiLine"
-                android:linksClickable="true"
-                android:minEms="20"
-                android:textCursorDrawable="@null"
-                android:textSize="@dimen/day_text_size" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/event_description_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    android:textSize="@dimen/day_text_size"
+                    android:visibility="gone" />
+
+                <org.fossify.commons.views.MyEditText
+                    android:id="@+id/event_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="all"
+                    android:gravity="top"
+                    android:hint="@string/description"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:linksClickable="true"
+                    android:minEms="20"
+                    android:textCursorDrawable="@null"
+                    android:textSize="@dimen/day_text_size" />
+
+                <Button
+                    android:id="@+id/event_description_toggle"
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_description_source"
+                    android:visibility="gone" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/event_description_divider"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider_height"
-                android:layout_below="@+id/event_description"
+                android:layout_below="@+id/event_description_holder"
                 android:layout_marginTop="@dimen/activity_margin"
                 android:layout_marginBottom="@dimen/normal_margin"
                 android:background="@color/divider_grey"

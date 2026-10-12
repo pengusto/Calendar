@@ -269,4 +269,6 @@
     <string name="manage_holidays">Feiertage verwalten</string>
     <string name="holidays_updated">Feiertage aktualisiert</string>
     <string name="holiday_management_notice">Die App aktualisiert Feiertage nun automatisch. Wähle deine Länder erneut aus, um diese Funktion zu aktivieren. Zuvor importierte Feiertage müssen möglicherweise manuell entfernt werden.</string>
+    <string name="edit_description_source">HTML-Quelltext bearbeiten</string>
+    <string name="preview_description">Beschreibung anzeigen</string>
 </resources>
