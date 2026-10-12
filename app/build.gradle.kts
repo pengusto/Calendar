@@ -32,6 +32,7 @@ android {
 
     defaultConfig {
         applicationId = providers.gradleProperty("DISTRIBUTION_APP_ID").orElse(project.property("APP_ID").toString()).get()
+        manifestPlaceholders["launcherNamespace"] = providers.gradleProperty("DISTRIBUTION_APP_ID").orElse(project.property("APP_ID").toString()).get()
         minSdk = project.libs.versions.app.build.minimumSDK.get().toInt()
         targetSdk = project.libs.versions.app.build.targetSDK.get().toInt()
         versionCode = project.property("VERSION_CODE").toString().toInt()
