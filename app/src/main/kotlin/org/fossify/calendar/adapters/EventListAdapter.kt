@@ -150,7 +150,11 @@ class EventListAdapter(
                 }
             }
 
-            eventItemDescription.text = if (replaceDescription) listEvent.location else listEvent.description.replace("\n", " ")
+            eventItemDescription.text = if (replaceDescription) {
+                listEvent.location
+            } else {
+                EventDescription.summary(listEvent.description)
+            }
             eventItemDescription.beVisibleIf(displayDescription && eventItemDescription.text.isNotEmpty())
             eventItemColorBar.background.applyColorFilter(listEvent.color)
 

@@ -73,6 +73,7 @@ import org.fossify.calendar.helpers.EVENT_CALENDAR_ID
 import org.fossify.calendar.helpers.EVENT_COLOR
 import org.fossify.calendar.helpers.EVENT_ID
 import org.fossify.calendar.helpers.EVENT_OCCURRENCE_TS
+import org.fossify.calendar.helpers.EventDescription
 import org.fossify.calendar.helpers.FLAG_ALL_DAY
 import org.fossify.calendar.helpers.Formatter
 import org.fossify.calendar.helpers.IS_DUPLICATE_INTENT
@@ -392,6 +393,7 @@ class EventActivity : SimpleActivity() {
         updateCalendar()
         checkAttendees()
         updateActionBarTitle()
+        setupDescriptionPreview()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
@@ -478,6 +480,8 @@ class EventActivity : SimpleActivity() {
             updateCalendar()
             updateTexts()
         }
+
+        setupDescriptionPreview()
 
         eventShowOnMap.setOnClickListener { showOnMap() }
         eventStartDate.setOnClickListener { setupStartDate() }
@@ -702,6 +706,36 @@ class EventActivity : SimpleActivity() {
         updateAvailabilityText()
         updateStatusText()
         updateAccessLevelText()
+    }
+
+    private fun setupDescriptionPreview() {
+        val description = binding.eventDescription.text.toString()
+        if (!EventDescription.isHtml(description)) return
+
+        // Keep the source in the existing edit field, so unrelated saves preserve it.
+        fun showPreview() {
+            binding.eventDescriptionPreview.text = EventDescription.display(binding.eventDescription.text.toString())
+            binding.eventDescriptionPreview.setTextColor(getProperTextColor())
+            binding.eventDescriptionPreview.setLinkTextColor(getProperPrimaryColor())
+            binding.eventDescriptionPreview.movementMethod = LinkMovementMethod.getInstance()
+            binding.eventDescriptionPreview.beVisible()
+            binding.eventDescription.beGone()
+            binding.eventDescriptionToggle.setTextColor(getProperTextColor())
+            binding.eventDescriptionToggle.setText(R.string.edit_description_source)
+        }
+
+        showPreview()
+        binding.eventDescriptionToggle.beVisible()
+        binding.eventDescriptionToggle.setOnClickListener {
+            if (binding.eventDescription.visibility == View.VISIBLE) {
+                hideKeyboard()
+                showPreview()
+            } else {
+                binding.eventDescriptionPreview.beGone()
+                binding.eventDescription.beVisible()
+                binding.eventDescriptionToggle.setText(R.string.preview_description)
+            }
+        }
     }
 
     private fun setupEditEvent() {
@@ -1675,7 +1709,11 @@ class EventActivity : SimpleActivity() {
             startTS = newStartTS
             endTS = newEndTS
             title = newTitle
-            description = binding.eventDescription.value
+            description = if (binding.eventDescription.text.toString() == description) {
+                description
+            } else {
+                binding.eventDescription.value
+            }
             reminder1Minutes = reminder1.minutes
             reminder2Minutes = reminder2.minutes
             reminder3Minutes = reminder3.minutes
