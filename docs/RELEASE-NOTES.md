@@ -2,7 +2,7 @@
 
 Unter **Assets** die Datei **Pengusto-Calendar.apk** herunterladen und auf Android öffnen. Falls nötig, Installationen aus der verwendeten Download-App erlauben.
 
-Die App heißt **Pengusto Calendar**, benötigt Android 8 oder neuer und wird neben Fossify installiert. Kalenderzugriff erlauben, Kalender-Synchronisierung aktivieren und gewünschte Android-Kalender auswählen. Outlook muss seine Termine bereits in den Android-Kalenderspeicher synchronisieren.
+Diese inoffizielle Fossify-Abspaltung heißt **Pengusto Calendar**, benötigt Android 8 oder neuer und wird neben Fossify installiert. Kalenderzugriff erlauben, Kalender-Synchronisierung aktivieren und gewünschte Android-Kalender auswählen. Outlook muss seine Termine bereits in den Android-Kalenderspeicher synchronisieren.
 
 ## Änderungen
 

@@ -37,7 +37,7 @@ jobs:
           test -n "$KEYSTORE_BASE64"
           sdkmanager "platforms;android-36" "build-tools;36.0.0"
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$SIGNING_STORE_FILE"
-          ./gradlew :app:assembleFossRelease :app:testFossDebugUnitTest :app:lintFossRelease :app:detekt --no-daemon --console=plain -Dorg.gradle.jvmargs=-Xmx4g -PDISTRIBUTION_APP_ID=io.github.pengusto.calendar -PVERSION_NAME="${RELEASE_TAG#pengusto-v}" -PVERSION_CODE="$((100000 + GITHUB_RUN_NUMBER))"
+          ./gradlew :app:assembleFossRelease :app:testFossDebugUnitTest :app:lintFossRelease :app:detekt --no-daemon --console=plain -Dorg.gradle.jvmargs=-Xmx4g -PDISTRIBUTION_APP_ID=org.fossify.calendar.pengusto -PVERSION_NAME="${RELEASE_TAG#pengusto-v}" -PVERSION_CODE="$((100000 + GITHUB_RUN_NUMBER))"
           mkdir -p release-assets
           cp app/build/outputs/apk/foss/release/*.apk release-assets/Pengusto-Calendar.apk
           "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs release-assets/Pengusto-Calendar.apk

@@ -2,7 +2,7 @@
 
 Unofficial Fossify Calendar build with readable Outlook/Exchange HTML descriptions.
 
-Once a signed release is published, download the APK from https://github.com/pengusto/Calendar/releases/latest and install it on Android 8 or newer. Android may ask you to allow installations from your downloading app. Package: `io.github.pengusto.calendar`. It installs beside the official Fossify app. Grant calendar access, enable calendar synchronization in the app settings and select your desired Android calendars. Synced calendars can be shared with the official app; local-only events/settings do not transfer automatically. Export local-only events to ICS before migrating them.
+Once a signed release is published, download the APK from https://github.com/pengusto/Calendar/releases/latest and install it on Android 8 or newer. Android may ask you to allow installations from your downloading app. Package: `org.fossify.calendar.pengusto`. It installs beside the official Fossify app. Grant calendar access, enable calendar synchronization in the app settings and select your desired Android calendars. Synced calendars can be shared with the official app; local-only events/settings do not transfer automatically. Export local-only events to ICS before migrating them.
 
 Updates use the same package and signing certificate. Keep the original release signing key backed up; never rotate it casually. Users install new release APKs over this app without uninstalling. Actual Outlook provider/server round trips require a device test; native HTML parsing and local save/widget tests have passed.
 
