@@ -1,3 +1,5 @@
+> **Pengusto Calendar (inoffizieller Fork)**: Installierbare APKs unter [GitHub Releases](https://github.com/pengusto/Calendar/releases/latest). Eigene App-Kennung, Installation neben Fossify. [Installation und Updates](docs/PENGUSTO-RELEASES.md).
+
 # Fossify Calendar
 <img alt="Logo" src="graphics/icon.webp" width="120" />
 
