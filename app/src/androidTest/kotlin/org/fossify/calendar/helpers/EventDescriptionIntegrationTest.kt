@@ -27,10 +27,10 @@ class EventDescriptionIntegrationTest {
     private val events = EventsDatabase.getInstance(context).EventsDao()
     private val source = "\n<html><head><style>hidden</style></head><body><p>First</p><p>Second</p></body></html>\n"
 
-    private fun withEvent(block: (Long) -> Unit) {
+    private fun withEvent(description: String = source, block: (Long) -> Unit) {
         val now = System.currentTimeMillis() / 1000
         val event = Event(null, startTS = now + 3600, endTS = now + 7200,
-            title = "HTML regression", description = source, importId = "html-regression")
+            title = "HTML regression", description = description, importId = "html-regression")
         context.eventsHelper.insertEvent(event, addToCalDAV = false, showToasts = false)
         try {
             block(event.id!!)
@@ -70,6 +70,15 @@ class EventDescriptionIntegrationTest {
     fun titleOnlySavePreservesExactHtml() = withEvent { id ->
         editAndSave(id, false)
         assertEquals(source, events.getEventWithId(id)!!.description)
+    }
+
+    @Test
+    fun titleOnlySavePreservesExactTableHtml() {
+        val table = "\n<table><tr><td>Morning</td><td>Workshop</td></tr></table>\n"
+        withEvent(table) { id ->
+            editAndSave(id, false)
+            assertEquals(table, events.getEventWithId(id)!!.description)
+        }
     }
 
     @Test

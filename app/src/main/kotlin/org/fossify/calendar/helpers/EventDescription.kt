@@ -13,7 +13,8 @@ import java.util.Locale
 object EventDescription {
     private val documentTag = Regex("""<\s*(?:html|body)\b[^>]*>""", RegexOption.IGNORE_CASE)
     private val pairedTag = Regex(
-        """<\s*(p|div|span|font|a|b|strong|i|em|u|ul|ol|li|blockquote|h[1-6])\b[^>]*>[\s\S]*?</\s*\1\s*>""",
+        """<\s*(p|div|span|font|a|b|strong|i|em|u|ul|ol|li|blockquote|h[1-6]|""" +
+            """table|thead|tbody|tfoot|tr|td|th|caption)\b[^>]*>[\s\S]*?</\s*\1\s*>""",
         RegexOption.IGNORE_CASE
     )
     private val lineBreak = Regex("""<br\s*/?>""", RegexOption.IGNORE_CASE)
@@ -22,6 +23,9 @@ object EventDescription {
         RegexOption.IGNORE_CASE
     )
 
+    private val cellEnd = Regex("""</\s*(?:td|th)\s*>""", RegexOption.IGNORE_CASE)
+    private val rowEnd = Regex("""</\s*tr\s*>""", RegexOption.IGNORE_CASE)
+
     fun isHtml(description: String): Boolean = documentTag.containsMatchIn(description) ||
         pairedTag.containsMatchIn(description) || lineBreak.containsMatchIn(description)
 
@@ -29,9 +33,8 @@ object EventDescription {
         if (!isHtml(description)) return description
 
         // Native text parsing: no WebView, script execution or remote image loading.
-        val parsed = SpannableStringBuilder(
-            Html.fromHtml(hiddenContent.replace(description, ""), Html.FROM_HTML_MODE_COMPACT)
-        )
+        val visibleHtml = rowEnd.replace(cellEnd.replace(hiddenContent.replace(description, ""), " "), "<br>")
+        val parsed = SpannableStringBuilder(Html.fromHtml(visibleHtml, Html.FROM_HTML_MODE_COMPACT))
         // Use the user's theme and font size rather than Exchange's hard-coded styles.
         parsed.getSpans(0, parsed.length, Any::class.java).forEach { span ->
             when (span) {
@@ -45,7 +48,7 @@ object EventDescription {
             if (scheme !in setOf("https", "http", "mailto")) parsed.removeSpan(span)
         }
         var end = parsed.length
-        while (end > 0 && parsed[end - 1] == '\n') end--
+        while (end > 0 && (parsed[end - 1] == '\n' || parsed[end - 1] == ' ')) end--
         return parsed.subSequence(0, end)
     }
 

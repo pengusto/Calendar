@@ -63,4 +63,20 @@ class EventDescriptionTest {
         assertTrue(preview.toString().contains("Last"))
         assertFalse(preview.toString().contains("<li>"))
     }
+    @Test
+    fun wrapperlessTableFragmentsAreReadableWithoutMergingCells() {
+        val source = "<table><tr><td>Morning</td><td>Workshop</td></tr></table>"
+        assertTrue(EventDescription.isHtml(source))
+        assertEquals("Morning Workshop", EventDescription.display(source).toString())
+        assertEquals("Morning Workshop", EventDescription.summary(source))
+        assertEquals("Time 10 & 11", EventDescription.summary("<TR><TH>Time</TH><TD>10 &amp; 11</TD></TR>"))
+        assertEquals("One Two", EventDescription.summary("<td>One</td><td>Two</td>"))
+    }
+
+    @Test
+    fun unmatchedTableWordAndLiteralBracketsStayPlain() {
+        val source = "x < 5 and bring <table> notes"
+        assertFalse(EventDescription.isHtml(source))
+        assertEquals(source, EventDescription.display(source))
+    }
 }
