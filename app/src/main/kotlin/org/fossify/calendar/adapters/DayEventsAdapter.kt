@@ -9,6 +9,7 @@ import org.fossify.calendar.activities.SimpleActivity
 import org.fossify.calendar.databinding.EventListItemBinding
 import org.fossify.calendar.dialogs.DeleteEventDialog
 import org.fossify.calendar.extensions.*
+import org.fossify.calendar.helpers.EventDescription
 import org.fossify.calendar.helpers.Formatter
 import org.fossify.calendar.models.Event
 import org.fossify.commons.adapters.MyRecyclerViewAdapter
@@ -108,7 +109,11 @@ class DayEventsAdapter(activity: SimpleActivity, val events: ArrayList<Event>, r
                 }
             }
 
-            eventItemDescription.text = if (replaceDescriptionWithLocation) event.location else event.description.replace("\n", " ")
+            eventItemDescription.text = if (replaceDescriptionWithLocation) {
+                event.location
+            } else {
+                EventDescription.summary(event.description)
+            }
             eventItemDescription.beVisibleIf(displayDescription && eventItemDescription.text.isNotEmpty())
             eventItemColorBar.background.applyColorFilter(event.color)
 

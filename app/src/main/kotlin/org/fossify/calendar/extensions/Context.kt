@@ -48,6 +48,7 @@ import org.fossify.calendar.helpers.DELETE_SELECTED_OCCURRENCE
 import org.fossify.calendar.helpers.DUMMY_ALARM_REQUEST_CODE
 import org.fossify.calendar.helpers.EVENT_ID
 import org.fossify.calendar.helpers.EVENT_OCCURRENCE_TS
+import org.fossify.calendar.helpers.EventDescription
 import org.fossify.calendar.helpers.EventsHelper
 import org.fossify.calendar.helpers.FLAG_TASK_COMPLETED
 import org.fossify.calendar.helpers.Formatter
@@ -483,7 +484,11 @@ fun Context.notifyEvent(originalEvent: Event) {
         startTime,
         endTime
     )
-    val descriptionOrLocation = if (config.replaceDescription) event.location else event.description
+    val descriptionOrLocation = if (config.replaceDescription) {
+        event.location
+    } else {
+        EventDescription.summary(event.description)
+    }
     val content = "$displayedStartDate $timeRange $descriptionOrLocation".trim()
     ensureBackgroundThread {
         if (event.isTask()) eventsHelper.updateIsTaskCompleted(event)
